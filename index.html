@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Consulta de Estudiantes</title>
+</head>
+
+<body>
+    <h1>Buscar Información del Estudiante</h1>
+    <label for="studentId">ID del Estudiante (1 o 2):</label>
+    <input type="number" id="studentId" min="1" max="2">
+    <button onclick="buscarEstudiante()">Buscar</button>
+
+    <h2>Resultado:</h2>
+    <pre id="resultado"></pre>
+
+    <script>
+        async function buscarEstudiante() {
+            const id = document.getElementById('studentId').value;
+            const resultado = document.getElementById('resultado');
+
+            if (!id || id < 1 || id > 2) {
+                resultado.textContent = 'Por favor, ingresa un ID válido (1 o 2)';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/user-info/${id}`);
+                if (!response.ok) throw new Error('Estudiante no encontrado');
+                const data = await response.json();
+                resultado.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                resultado.textContent = error.message;
+            }
+        }
+    </script>
+</body>
+
+</html>
