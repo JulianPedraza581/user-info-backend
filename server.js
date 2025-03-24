@@ -18,6 +18,11 @@ const students = {
   },
 };
 
+// Mostrar el index.html directamente
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 // Endpoint para obtener información de un estudiante según el ID
 app.get("/user-info/:id", (req, res) => {
   const studentId = req.params.id;
